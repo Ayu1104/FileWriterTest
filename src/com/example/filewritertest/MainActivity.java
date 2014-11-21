@@ -26,17 +26,17 @@ public class MainActivity extends Activity {
 			
 		@Override
 			public void run() {
-				// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+				// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
 
 				File file = new File(getExternalFilesDir(null), "test.txt");
 
 				try{
-					//	/mnt/sdcard/Android/data/com.example.filewritertest/files/test.txti‘Sƒ†[ƒU“Ç‚İ‘‚«‰Âj ‚É‘‚«‚Ş
+					//	/mnt/sdcard/Android/data/com.example.filewritertest/files/test.txtï¼ˆå…¨ãƒ¦ãƒ¼ã‚¶èª­ã¿æ›¸ãå¯ï¼‰ ã«æ›¸ãè¾¼ã‚€
 //					FileOutputStream output = new FileOutputStream(file);
-					//	/data/data/com.example.filewritertest/files/test.txtiƒAƒvƒŠ‚Ì‚İ“Ç‚İ‘‚«‰Âj ‚É‘‚«‚Ş
+					//	/data/data/com.example.filewritertest/files/test.txtï¼ˆã‚¢ãƒ—ãƒªã®ã¿èª­ã¿æ›¸ãå¯ï¼‰ ã«æ›¸ãè¾¼ã‚€
 					FileOutputStream output = openFileOutput(file.getName(), MODE_PRIVATE);
 					BufferedOutputStream stream = new BufferedOutputStream(output);
-					stream.write("ƒeƒLƒXƒgƒeƒLƒXƒgƒeƒLƒXƒg".getBytes("UTF-8"));
+					stream.write("ãƒ†ã‚­ã‚¹ãƒˆãƒ†ã‚­ã‚¹ãƒˆãƒ†ã‚­ã‚¹ãƒˆ".getBytes("UTF-8"));
 					stream.close();
 					
 				}catch(Exception exception){
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
 					
 					@Override
 					public void run() {
-						// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+						// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
 						TextView textview1 = (TextView)findViewById(R.id.textview1);
 						textview1.setText(text);							
 					}
@@ -70,5 +70,43 @@ public class MainActivity extends Activity {
 		}).start();
 
 	}
+
+	public static String readPublicFile(String filename){
+	}
+
+	public static String writePublicFile(String filename, String text){
+
+File file = new File(getExternalFilesDir(null), filename);
+
+				try{
+					
+FileOutputStream output = new FileOutputStream(file);
+BufferedOutputStream stream = new BufferedOutputStream(output);
+stream.write(text.getBytes("UTF-8"));
+stream.close();
+					
+				}catch(Exception exception){
+Log.e("", exception.toString() + "on writing");
+				}
+	}
+
+	public static String readPrivateFile(String filename){
+	}
+
+	public static String writePrivateFile(String filename, String text){
+File file = new File(getExternalFilesDir(null), filename);
+
+				try{
+					
+FileOutputStream output = openFileOutput(file.getName(), MODE_PRIVATE);
+BufferedOutputStream stream = new BufferedOutputStream(output);
+stream.write(text.getBytes("UTF-8"));
+stream.close();
+					
+				}catch(Exception exception){
+Log.e("", exception.toString() + "on writing");
+				}
+	}
+
 
 }
