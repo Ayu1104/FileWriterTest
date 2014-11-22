@@ -1,20 +1,25 @@
 package com.example.filewritertest;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
+/**
+ * アクセス方法
+ * MainAc
+ * @author 1223066
+ *
+ */
 public class MainActivity extends Activity {
 	
 	Handler handler = new Handler();
+	Context context = this;
 	String text = "";
 
 	@Override
@@ -28,34 +33,9 @@ public class MainActivity extends Activity {
 			public void run() {
 				// TODO 自動生成されたメソッド・スタブ
 
-				File file = new File(getExternalFilesDir(null), "test.txt");
-
-				try{
-					//	/mnt/sdcard/Android/data/com.example.filewritertest/files/test.txt（全ユーザ読み書き可） に書き込む
-//					FileOutputStream output = new FileOutputStream(file);
-					//	/data/data/com.example.filewritertest/files/test.txt（アプリのみ読み書き可） に書き込む
-					FileOutputStream output = openFileOutput(file.getName(), MODE_PRIVATE);
-					BufferedOutputStream stream = new BufferedOutputStream(output);
-					stream.write("テキストテキストテキスト".getBytes("UTF-8"));
-					stream.close();
-					
-				}catch(Exception exception){
-					Log.e("", exception.toString() + "on writing");
-				}
-				
-				try{					
-//					FileInputStream in = new FileInputStream(file);
-					FileInputStream in = openFileInput(file.getName());
-					BufferedInputStream stream = new BufferedInputStream(in);
-					text = "";
-					byte[] temp = new byte[stream.available()];
-					while(stream.read(temp) != -1){
-						text += new String(temp, "UTF-8");
-					}
-					stream.close();
-				}catch(Exception exception){
-					Log.e("", exception.toString() + " on reading");
-				}
+				text = "";
+				text += "書き込み結果：" + FileWriter.writePrivateFile(context, "test.txt", "テキストテキストテキスト") + "\n";
+				text += "読み込み結果：" + FileWriter.readPrivateFile(context, "test.txt") + "\n";
 				
 				handler.post(new Runnable() {
 					
@@ -70,43 +50,4 @@ public class MainActivity extends Activity {
 		}).start();
 
 	}
-
-	public static String readPublicFile(String filename){
-	}
-
-	public static String writePublicFile(String filename, String text){
-
-File file = new File(getExternalFilesDir(null), filename);
-
-				try{
-					
-FileOutputStream output = new FileOutputStream(file);
-BufferedOutputStream stream = new BufferedOutputStream(output);
-stream.write(text.getBytes("UTF-8"));
-stream.close();
-					
-				}catch(Exception exception){
-Log.e("", exception.toString() + "on writing");
-				}
-	}
-
-	public static String readPrivateFile(String filename){
-	}
-
-	public static String writePrivateFile(String filename, String text){
-File file = new File(getExternalFilesDir(null), filename);
-
-				try{
-					
-FileOutputStream output = openFileOutput(file.getName(), MODE_PRIVATE);
-BufferedOutputStream stream = new BufferedOutputStream(output);
-stream.write(text.getBytes("UTF-8"));
-stream.close();
-					
-				}catch(Exception exception){
-Log.e("", exception.toString() + "on writing");
-				}
-	}
-
-
 }
